@@ -7,6 +7,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mathlab_admin/Constants/Strings.dart';
 import 'package:mathlab_admin/Constants/functionsupporter.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Homescreen.dart';
+import 'package:mathlab_admin/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -361,6 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
         preferences.setString("TOKEN", js["token"]);
         preferences.setString("LOGIN", "IN");
         preferences.setString("EMAIL", email);
+        token = js["token"];
         Get.to(HomeScreen(),
             duration: Duration(
               milliseconds: 500,
