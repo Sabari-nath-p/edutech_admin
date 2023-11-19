@@ -49,26 +49,30 @@ class _ExamMainScreenState extends State<ExamMainScreen> {
                   ),
                 ),
                 width(10),
-                tx700("Text Exam", size: 25, color: Colors.black54),
+                if (Ectrl.examModel != null)
+                  tx700(Ectrl.examModel!.examName!,
+                      size: 25, color: Colors.black54),
                 Expanded(child: Container()),
                 width(20)
               ],
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Container(
-                    width: 900,
-                    child: QuestionAdd(),
-                  ),
-                  width(10),
-                  Container(
-                    width: 420,
-                    child: QuestionListView(),
-                  ),
-                  width(20),
-                ],
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 700,
+                      child: QuestionAdd(),
+                    ),
+                    width(10),
+                    Container(
+                      width: 420,
+                      child: QuestionListView(),
+                    ),
+                    width(20),
+                  ],
+                ),
               ),
             )
           ],
