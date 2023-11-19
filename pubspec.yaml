@@ -49,6 +49,8 @@ dependencies:
   intl: ^0.18.1
   syncfusion_flutter_pdfviewer: ^23.1.41
   tex_text: ^0.1.8
+  webview_flutter: ^4.4.2
+  url_launcher: ^6.2.1
 
 dev_dependencies:
   flutter_test:

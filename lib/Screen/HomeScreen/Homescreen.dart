@@ -26,7 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             if (ctrl.CurrentMenu == 0)
               Positioned(
-                  left: 340, top: 30, bottom: 0, right: 0, child: CourseView()),
+                  left: 340,
+                  top: 30,
+                  bottom: 20,
+                  right: 0,
+                  child: CourseView()),
             Positioned(
                 left: 0, top: 0, bottom: 0, width: 300, child: SideBar()),
             Positioned(

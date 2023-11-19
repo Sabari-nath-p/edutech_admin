@@ -68,13 +68,13 @@ class _SideBarState extends State<SideBar> {
             //       color: Colors.black54,
             //     ),
             //     4),
-            homebarElements(
-                "App Setting",
-                SvgPicture.asset(
-                  "assets/icons/progess_icon.svg",
-                  color: Colors.black54,
-                ),
-                2),
+            // homebarElements(
+            //     "App Setting",
+            //     SvgPicture.asset(
+            //       "assets/icons/progess_icon.svg",
+            //       color: Colors.black54,
+            //     ),
+            //     2),
             Expanded(child: Container()),
             InkWell(
               onTap: () async {

@@ -54,13 +54,14 @@ class _ExamMainScreenState extends State<ExamMainScreen> {
                 width(20)
               ],
             ),
-            Expanded(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Expanded(
-                      child: Container(
+                  Container(
+                    width: 900,
                     child: QuestionAdd(),
-                  )),
+                  ),
                   width(10),
                   Container(
                     width: 420,

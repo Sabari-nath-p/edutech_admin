@@ -36,6 +36,9 @@ class _AddNoteState extends State<AddNote> {
   void initState() {
     // TODO: implement initState
     createdData.text = DateTime.now().toString();
+    if (ctrl.SelectedDate != null) {
+      createdData.text = ctrl.SelectedDate!.toString();
+    }
     if (Vdata != 1) {
       md = NoteModel.fromJson(Vdata);
       pdfLink.text = md.pdf!;

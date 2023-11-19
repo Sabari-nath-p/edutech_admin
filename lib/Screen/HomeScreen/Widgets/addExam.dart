@@ -133,7 +133,7 @@ class _AddExamState extends State<AddExam> {
     model.durationOfExam = durationOfExam.text;
     model.totalMarks = int.parse(totalMarks.text).toInt();
     model.passmark = int.parse(passmark.text).toInt();
-    model.isActive = false;
+    model.isActive = true;
     model.accessType = int.parse(accessType.text).toInt();
 
     ctrl.AddExam(model, context);

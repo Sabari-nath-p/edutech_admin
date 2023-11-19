@@ -4,6 +4,8 @@ import 'package:mathlab_admin/Screen/HomeScreen/Models/contentModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addExam.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addNote.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addVideo.dart';
+import 'package:mathlab_admin/Screen/HomeScreen/Widgets/player.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constants/AppColor.dart';
 import '../../../Constants/functionsupporter.dart';
@@ -143,7 +145,7 @@ class _ContentViewState extends State<ContentView> {
               // width: 900,
               margin: EdgeInsets.only(top: 40),
               alignment: Alignment.topLeft,
-              height: 1000,
+              // height: 1000,
               child: DataTable(
                   showBottomBorder: true,
                   columnSpacing: 0,
@@ -297,26 +299,84 @@ class _ContentViewState extends State<ContentView> {
                             ],
                           )),
                           DataCell(
-                            InkWell(
-                              onTap: () {
-                                if (data.type == "EXAM")
-                                  ctrl.SetContent(data.content_id.toString(),
-                                      cs: data);
-                              },
-                              child: Container(
-                                  width: 100,
-                                  height: 40,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.all(2),
-                                  child: Icon(Icons.preview)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (data.type == "EXAM")
+                                      ctrl.SetContent(
+                                          data.content_id.toString(),
+                                          cs: data);
+
+                                    if (data.type == "VIDEO") {
+                                      List option =
+                                          data.video!.videoId!.split("/");
+                                      launchUrl(Uri.parse(
+                                          'https://player.vimeo.com/video/${option[0]}?h=${option[1]}'));
+                                    }
+
+                                    if (data.type == "NOTE") {
+                                      launchUrl(
+                                          Uri.parse(data.noteModel!.pdf!));
+                                    }
+                                  },
+                                  child: Container(
+                                      //width: 100,
+                                      height: 40,
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.all(2),
+                                      child: Icon(Icons.preview)),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    int i = ctrl.ContentList.indexOf(data);
+                                    if (i > 0) {
+                                      DateTime sdate = DateTime.parse(
+                                          data.created_date.toString());
+                                      DateTime fdate = DateTime.parse(ctrl
+                                          .ContentList[i - 1].created_date!);
+
+                                      DateTime middleDate =
+                                          calculateMiddleDate(fdate, sdate);
+                                      ctrl.SelectedDate = middleDate;
+
+                                      print(sdate);
+                                      print(middleDate);
+                                      print(fdate);
+                                    }
+                                  },
+                                  child: Container(
+                                      // width: 100,
+                                      height: 40,
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.all(2),
+                                      child: RotatedBox(
+                                          quarterTurns: 1,
+                                          child: Icon(
+                                              Icons.arrow_back_ios_rounded))),
+                                ),
+                              ],
                             ),
                           )
                         ])
                   ]),
             ),
+            height(100)
           ],
         ),
       ),
     );
   }
+}
+
+DateTime calculateMiddleDate(DateTime date1, DateTime date2) {
+  // Calculate the difference in days between the two dates
+  Duration difference = date2.difference(date1);
+
+  // Calculate the middle date by adding half of the difference to the first date
+  DateTime middleDate =
+      date1.add(Duration(microseconds: difference.inMicroseconds ~/ 2));
+
+  return middleDate;
 }
