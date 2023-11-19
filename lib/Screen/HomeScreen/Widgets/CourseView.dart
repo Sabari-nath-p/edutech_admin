@@ -29,7 +29,7 @@ class _CourseViewState extends State<CourseView> {
     // TODO: implement initState
 
     super.initState();
-    ctrl.loadCourse();
+    //ctrl.loadCourse();
   }
 
   @override
