@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/controller.dart';
+import 'package:mathlab_admin/Screen/ExamScreen/widgets/NumericalQuestion.dart';
+import 'package:mathlab_admin/Screen/ExamScreen/widgets/multiSelect.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/widgets/multipleChoice.dart';
 
 import '../../../Constants/AppColor.dart';
@@ -18,7 +20,7 @@ class _QuestionAddState extends State<QuestionAdd> {
   @override
   ExamController ctrl = Get.put(ExamController());
 
-  List QuestionType = ["Multiple", "MultiChoice", "Numerical"];
+  List QuestionType = ["Multiple Choice", "MultiSelect", "Numerical"];
 
   Widget build(BuildContext context) {
     return Container(
@@ -60,13 +62,16 @@ class _QuestionAddState extends State<QuestionAdd> {
                     ctrl.questionType = -1;
                     ctrl.QuestionEdit = false;
                     ctrl.multipleChoiceModel = null;
+                    ctrl.multiSelectModel = null;
                     ctrl.update();
                   },
                   child: Icon(Icons.close)),
               width(20)
             ],
           ),
-          if (ctrl.questionType == 0) MultipleChoice()
+          if (ctrl.questionType == 0) MultipleChoice(),
+          if (ctrl.questionType == 1) MultiSelect(),
+          if (ctrl.questionType == 2) NumericalQuestionView()
         ],
       ),
     );

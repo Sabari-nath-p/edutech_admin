@@ -25,6 +25,7 @@ class HomeController extends GetxController {
   String SelectedSubject = "";
   String SelectedModule = "";
   String SelectedCotent = "";
+  DateTime? SelectedDate;
   late CourseModel SelectedCourseModel;
   late SubjectModel SelectedSubjectModel;
   late ModuleModel SelectedModuleModel;
@@ -216,7 +217,7 @@ class HomeController extends GetxController {
     print(json.encode(videoModel.toJson(update: false)));
     Request.FormData formData = Request.FormData.fromMap(videoModel.toJson());
 
-    final response = await dio.put(
+    final response = await dio.patch(
         endpoint +
             "users/fieldofstudy/${SelectedCourse}/subjects/${SelectedSubject}/modules/$SelectedModule/videos/${videoModel.videoUniqueId}", //users/fieldofstudy/${SelectedCourse}/subjects/",
         data: formData,

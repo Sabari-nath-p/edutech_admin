@@ -35,9 +35,12 @@ class _AddVideoState extends State<AddVideo> {
   void initState() {
     // TODO: implement initState
     createdData.text = DateTime.now().toString();
+    if (ctrl.SelectedDate != null && Vdata == 1) {
+      createdData.text = ctrl.SelectedDate!.toString();
+    }
     if (Vdata != 1) {
       md = VideoModel.fromJson(Vdata);
-      VideoID.text = md.videoId!;
+      if (md.videoId != null) VideoID.text = md.videoId!;
       title.text = md.title!;
       description.text = md.description!;
       accessType.text = md.accessType.toString();
@@ -87,7 +90,6 @@ class _AddVideoState extends State<AddVideo> {
                   child: InkWell(
                     onTap: () async {
                       if (title.text.isNotEmpty &&
-                          VideoID.text.isNotEmpty &&
                           accessType.text.isNotEmpty &&
                           createdData.text.isNotEmpty) {
                         setState(() {
@@ -143,10 +145,11 @@ class _AddVideoState extends State<AddVideo> {
     model.videoId = VideoID.text;
     model.description = description.text;
     model.title = title.text;
-    model.isActive = (md.isActive == "1");
+    model.isActive = isActive.text == "1";
     model.createdDate =
         formatter.format(DateTime.parse(createdData.text).toLocal());
-    model.updatedDate = model.createdDate;
+    model.updatedDate = formatter.format(DateTime.now());
+
     print(model.createdDate);
     ctrl.UpdateVideo(model, context);
   }

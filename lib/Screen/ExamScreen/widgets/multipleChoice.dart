@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/models/multiplechoice.dart';
+import 'package:mathlab_admin/main.dart';
 
 import '../../../Constants/AppHeaders.dart';
 import '../../../Constants/Strings.dart';
@@ -94,6 +95,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
   @override
   Widget build(BuildContext context) {
+    print(token);
     return Expanded(
       child: SingleChildScrollView(
         child: Column(

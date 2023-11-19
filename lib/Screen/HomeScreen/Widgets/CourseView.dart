@@ -106,7 +106,7 @@ class _CourseViewState extends State<CourseView> {
                     // width: 900,
                     margin: EdgeInsets.only(top: 40),
                     alignment: Alignment.topLeft,
-                    height: 1000,
+                    // height: 1000,
                     child: DataTable(
                         showBottomBorder: true,
                         columnSpacing: 0,
