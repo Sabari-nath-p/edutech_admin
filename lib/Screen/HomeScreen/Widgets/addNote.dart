@@ -97,11 +97,17 @@ class _AddNoteState extends State<AddNote> {
                         setState(() {
                           ctrl.CourseUploading = true;
                         });
+                        print(isActive.text);
+                        // d return;
                         if (Vdata == 1)
                           AddVideoData();
                         else
                           EditVideoData();
-                      } else {}
+                      } else {
+                        ShowToast(
+                            title: "Input Field are missing",
+                            body: "Please fill the field to continue");
+                      }
                     },
                     child: ButtonContainer(
                       (ctrl.CourseUploading)
@@ -147,7 +153,7 @@ class _AddNoteState extends State<AddNote> {
     model.pdf = pdfLink.text;
     model.description = description.text;
     model.title = title.text;
-    model.isActive = (md.isActive == "1");
+    model.isActive = isActive.text == "1" ? true : false;
     model.createdDate =
         formatter.format(DateTime.parse(createdData.text).toLocal());
     model.updatedDate = model.createdDate;

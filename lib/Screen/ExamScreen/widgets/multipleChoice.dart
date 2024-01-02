@@ -295,7 +295,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
     } else {
       print(response.data);
       print(response.statusCode);
-      ShowToast(title: "Error occurred", body: "Something went to wrong");
+      ShowToast(title: "Error occurred", body: response.data);
       setState(() {
         Loading = false;
       });

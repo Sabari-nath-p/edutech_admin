@@ -174,7 +174,7 @@ class _MultiSelectState extends State<MultiSelect> {
       Ectrl.QuestionEdit = true;
       Ectrl.update();
     } else {
-      ShowToast(title: "Error occurred", body: "Something went to wrong");
+      ShowToast(title: "Error occurred", body: response.data);
       setState(() {
         Loading = false;
       });

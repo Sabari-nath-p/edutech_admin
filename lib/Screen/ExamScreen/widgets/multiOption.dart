@@ -60,16 +60,23 @@ class MultiSelectOption extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(color: Colors.black38)),
-                    child: TexText(
-                      data.optionsText!,
-                      // maxLines: null,
-                      // controller: controller,
-                      // decoration: InputDecoration(
-                      //     border: InputBorder.none,
-                      //     isDense: true,
-                      //     hintText: title,
-                      //     isCollapsed: true),
-                      style: GoogleFonts.poppins(fontSize: 14),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TexText(
+                            data.optionsText!,
+                            // maxLines: null,
+                            // controller: controller,
+                            // decoration: InputDecoration(
+                            //     border: InputBorder.none,
+                            //     isDense: true,
+                            //     hintText: title,
+                            //     isCollapsed: true),
+                            style: GoogleFonts.poppins(fontSize: 14),
+                          ),
+                        ),
+                        if (data.isAnswer!) Icon(Icons.verified)
+                      ],
                     ),
                   ),
                 width(10),

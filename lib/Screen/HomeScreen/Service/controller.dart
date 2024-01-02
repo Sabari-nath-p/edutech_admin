@@ -155,7 +155,7 @@ class HomeController extends GetxController {
       update();
     }
 
-    ContentList.sort((a, b) => a.created_date!.compareTo(b.created_date!));
+    ContentList.sort((a, b) => a.title!.compareTo(b.title!));
     update();
   }
 
@@ -717,8 +717,8 @@ class HomeController extends GetxController {
   }
 
   loadCourse() async {
-    CourseList = [];
-    update();
+    CourseList.clear();
+
     final response = await http.get(Uri.parse(endpoint + "users/fieldofstudy/"),
         headers: AuthHeader);
 
@@ -848,5 +848,12 @@ class HomeController extends GetxController {
       update();
       ShowToast(title: "Error occurred", body: "Something went to wrong");
     }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    loadCourse();
+    super.onInit();
   }
 }

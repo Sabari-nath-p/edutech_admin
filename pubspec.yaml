@@ -27,6 +27,19 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
+icons_launcher:
+  image_path: "assets/icons/mathlablogo.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    windows:
+      enable: true      
+
+
+
 dependencies:
   flutter:
     sdk: flutter
@@ -39,7 +52,7 @@ dependencies:
   google_fonts: ^6.1.0
   loading_animation_widget: ^1.2.0+4
   get: ^4.6.5
-  http: ^1.1.0
+  http: ^1.0.0
   svg_flutter: ^0.0.1
   file_picker: ^6.0.0
   data_table_2: ^2.5.8
@@ -55,6 +68,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  icons_launcher: ^2.1.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

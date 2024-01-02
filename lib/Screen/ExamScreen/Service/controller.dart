@@ -114,11 +114,12 @@ class ExamController extends GetxController {
   DeleteMultiple(String mcqID, int type, BuildContext context) {
     String balance = "/exam/addexam/${examID}/";
     if (type == 0)
-      balance + "multiplechoice/$mcqID/";
+      balance = balance + "multiplechoice/$mcqID/";
     else if (type == 1)
-      balance + "multiselect/$mcqID/";
+      balance = balance + "multiselect/$mcqID/";
     else
-      balance + "numericals/$mcqID/";
+      balance = balance + "numericals/$mcqID/";
+
     QuickAlert.show(
         context: context,
         type: QuickAlertType.confirm,
@@ -132,7 +133,7 @@ class ExamController extends GetxController {
           print(response.statusCode);
 
           if (response.statusCode == 204) {
-            ShowToast(title: "Successful", body: "Exam deleted succefully");
+            ShowToast(title: "Successful", body: "Question deleted succefully");
             loadExam();
             update();
             Navigator.of(context).pop();
