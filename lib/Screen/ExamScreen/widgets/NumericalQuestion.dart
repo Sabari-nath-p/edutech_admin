@@ -227,7 +227,7 @@ class _NumericalQuestionViewState extends State<NumericalQuestionView> {
     } else {
       print(response.data);
       print(response.statusCode);
-      ShowToast(title: "Error occurred", body: "Something went to wrong");
+      ShowToast(title: "Error occurred", body: response.data);
       setState(() {
         Loading = false;
       });

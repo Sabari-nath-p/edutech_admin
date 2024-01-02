@@ -24,13 +24,13 @@ class _CourseViewState extends State<CourseView> {
   String CourseSearchText = "";
   HomeController ctrl = Get.put(HomeController());
 
-  @override
-  void initState() {
-    // TODO: implement initState
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
 
-    super.initState();
-    ctrl.loadCourse();
-  }
+  //   super.initState();
+  //   ctrl.loadCourse();
+  // }
 
   @override
   Widget build(BuildContext context) {

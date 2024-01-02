@@ -14,7 +14,6 @@ class TextRender extends StatefulWidget {
 }
 
 class _TextRenderState extends State<TextRender> {
-  
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -41,16 +40,19 @@ class _TextRenderState extends State<TextRender> {
                               horizontal: 12, vertical: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              border: Border.all(color: Colors.black38)),
-                          child: TexText(widget.controller.text
-                              // maxLines: null,
-                              // controller: controller,
-                              // decoration: InputDecoration(
-                              //     border: InputBorder.none,
-                              //     isDense: true,
-                              //     hintText: title,
-                              //     isCollapsed: true),
-                              ),
+                              border: Border.all(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.38))),
+                          child: TexText(
+                            widget.controller.text,
+                            mathStyle: MathStyle.display,
+                            // maxLines: null,
+                            // controller: controller,
+                            // decoration: InputDecoration(
+                            //     border: InputBorder.none,
+                            //     isDense: true,
+                            //     hintText: title,
+                            //     isCollapsed: true),
+                          ),
                         ),
                         height(20),
                         Container(

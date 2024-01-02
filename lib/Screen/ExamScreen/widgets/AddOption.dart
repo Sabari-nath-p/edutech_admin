@@ -35,6 +35,7 @@ class _AddOptionState extends State<AddOption> {
     if (widget.option != null) {
       optionNo.text = widget.option!.optionNo.toString();
       optionText.text = widget.option!.optionsText.toString();
+      isAnswer.text = widget.option!.isAnswer! ? "1" : "0";
       if (widget.option!.optionsImage != null)
         OptionImage.text = widget.option!.optionsImage.toString();
     }
@@ -86,6 +87,10 @@ class _AddOptionState extends State<AddOption> {
                           AddOptionRequest();
                         else
                           UpdateOptionRequest();
+                      } else {
+                        ShowToast(
+                            title: "Field are missing",
+                            body: "Please fill data in missing field");
                       }
                     },
                     child: ButtonContainer(
@@ -115,7 +120,7 @@ class _AddOptionState extends State<AddOption> {
       "options_text": optionText.text,
       "option_no": optionNo.text,
       "question": Ectrl.multiSelectModel!.msqId,
-      "is_active": isAnswer.text == "1",
+      "is_answer": isAnswer.text == "1" ? true : false,
       if (OptionImage.text != "")
         'options_image': await Request.MultipartFile.fromFile(OptionImage.text,
             filename: OptionImage.text.split("/").last),
@@ -149,13 +154,13 @@ class _AddOptionState extends State<AddOption> {
       "options_text": optionText.text,
       "option_no": optionNo.text,
       "question": Ectrl.multiSelectModel!.msqId,
-      "is_active": isAnswer.text == "1",
+      "is_answer": isAnswer.text == "1" ? true : false,
       if (OptionImage.text != "" &&
           OptionImage.text != widget.option!.optionsImage)
         'options_image': await Request.MultipartFile.fromFile(OptionImage.text,
             filename: OptionImage.text.split("/").last),
     });
-
+    print(formData.fields);
     final response = await dio.patch(
         endpoint +
             "/exam/addexam/${Ectrl.examID}/multiselect/${Ectrl.multiSelectModel!.msqId}/options/${widget.option!.optionId!}/", //users/fieldofstudy/${SelectedCourse}/subjects/",

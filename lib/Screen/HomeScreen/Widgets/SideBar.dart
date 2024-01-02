@@ -96,7 +96,7 @@ class _SideBarState extends State<SideBar> {
       onTap: () {
         setState(() {
           ctrl.CurrentMenu = index;
-          ctrl.loadCourse();
+          //     ctrl.loadCourse();
           ctrl.update();
           //  PageControlNotifer.value++;
         });

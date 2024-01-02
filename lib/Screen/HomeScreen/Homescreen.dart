@@ -6,6 +6,7 @@ import 'package:mathlab_admin/Constants/functionsupporter.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/ExamMain.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Service/controller.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/CourseView.dart';
+import 'package:mathlab_admin/Screen/ProfileView/View/ProfileView.dart';
 
 import 'Widgets/SideBar.dart';
 
@@ -26,13 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             if (ctrl.CurrentMenu == 0)
               Positioned(
-                  left: 340,
+                  left: 270,
                   top: 30,
                   bottom: 20,
                   right: 0,
                   child: CourseView()),
+            if (ctrl.CurrentMenu == 1)
+              Positioned(
+                  left: 270,
+                  top: 30,
+                  bottom: 20,
+                  right: 0,
+                  child: ProfileViewScreen()),
             Positioned(
-                left: 0, top: 0, bottom: 0, width: 300, child: SideBar()),
+                left: 0, top: 0, bottom: 0, width: 250, child: SideBar()),
             Positioned(
                 left: 10,
                 top: 10,
