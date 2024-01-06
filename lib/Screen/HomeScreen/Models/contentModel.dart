@@ -5,6 +5,7 @@ import 'package:mathlab_admin/Screen/HomeScreen/Models/VideoModel.dart';
 class contentModel {
   int? content_id;
   String? title;
+  String? sortTitle;
   String? type;
   String? created_date;
   bool? isVisible;
@@ -15,6 +16,7 @@ class contentModel {
   contentModel(
     this.content_id,
     this.title,
+    this.sortTitle,
     this.type,
     this.created_date,
     this.video,

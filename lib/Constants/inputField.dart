@@ -187,7 +187,7 @@ ETLfields(String title, TextEditingController controller) {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: Colors.black38)),
-            child: TexText(controller.text
+            child: Text(controller.text
                 // maxLines: null,
                 // controller: controller,
                 // decoration: InputDecoration(
@@ -393,5 +393,3 @@ FieldPdf(String title, TextEditingController file) {
     );
   });
 }
-
-

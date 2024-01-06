@@ -108,6 +108,10 @@ class ExamController extends GetxController {
         //  print(questionList);
         update();
       }
+
+      questionList
+          .sort(((a, b) => a.questionNumber!.compareTo(b.questionNumber!)));
+      update();
     }
   }
 

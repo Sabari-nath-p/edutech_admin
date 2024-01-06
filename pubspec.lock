@@ -159,7 +159,7 @@ packages:
     source: hosted
     version: "2.0.3"
   flutter_math_fork:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_math_fork
       sha256: "94bee4642892a94939af0748c6a7de0ff8318feee588379dcdfea7dc5cba06c8"
@@ -256,6 +256,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  latext:
+    dependency: "direct main"
+    description:
+      name: latext
+      sha256: b3de59780bc898d56fdb75d643154ad92ba303812e587ac73406d46e4ce05555
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   lints:
     dependency: transitive
     description:

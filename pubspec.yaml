@@ -64,6 +64,9 @@ dependencies:
   tex_text: ^0.1.8
   webview_flutter: ^4.4.2
   url_launcher: ^6.2.1
+  latext: ^0.2.0
+  flutter_math_fork: ^0.7.2
+  
 
 dev_dependencies:
   flutter_test:

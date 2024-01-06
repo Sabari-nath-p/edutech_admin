@@ -96,6 +96,7 @@ class HomeController extends GetxController {
         contentModel Cmodel = contentModel(
           model.videoUniqueId,
           model.title,
+          model.title,
           "VIDEO",
           model.createdDate,
           model,
@@ -120,6 +121,7 @@ class HomeController extends GetxController {
         contentModel Cmodel = contentModel(
           model.notesId,
           model.title,
+          model.title,
           "NOTE",
           model.createdDate,
           null,
@@ -143,6 +145,7 @@ class HomeController extends GetxController {
         contentModel Cmodel = contentModel(
           model.examUniqueId,
           model.examName,
+          model.examName,
           "EXAM",
           model.createdDate,
           null,
@@ -155,8 +158,41 @@ class HomeController extends GetxController {
       update();
     }
 
-    ContentList.sort((a, b) => a.title!.compareTo(b.title!));
+    //   ContentList.sort((a, b) => a.title!.compareTo(b.title!));
+    ContentList = sortContentList(ContentList);
     update();
+  }
+
+  List<contentModel> sortContentList(List<contentModel> contentList) {
+    List<String> _extractVersion(contentModel content) {
+      // Use regular expression to extract version numbers
+      RegExp regex = RegExp(r'(\d+(\.\d+)*)');
+      RegExpMatch? match = regex.firstMatch(content.sortTitle!);
+      List<String> versionNumbers =
+          match != null ? match.group(1)!.split('.') : ['0'];
+      content.sortTitle =
+          versionNumbers.join('.'); // Update title with the modified version
+      return versionNumbers;
+    }
+
+    // Sort content based on extracted version numbers
+    contentList.sort((a, b) {
+      List<String> versionA = _extractVersion(a);
+      List<String> versionB = _extractVersion(b);
+
+      for (int i = 0; i < versionA.length && i < versionB.length; i++) {
+        int numA = int.parse(versionA[i]);
+        int numB = int.parse(versionB[i]);
+
+        if (numA != numB) {
+          return numA - numB;
+        }
+      }
+
+      return versionA.length - versionB.length;
+    });
+
+    return contentList;
   }
 
   loadModule() async {
