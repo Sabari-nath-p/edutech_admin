@@ -177,6 +177,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       "option2_text": optionB.text,
       "option3_text": optionC.text,
       "option4_text": optionD.text,
+      "section" : Ectrl.selectedSectionID,
       "positive_marks": postiveMark.text,
       "negetive_mark": negativeMark.text,
       "answer": correctAnswer.text,

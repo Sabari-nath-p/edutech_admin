@@ -23,12 +23,13 @@ class ExamController extends GetxController {
   int subjectID = 0;
   int moduleID = 0;
   int examID = 0;
+  String selectedSectionID = "";
   bool QuestionEdit = false;
   ValueNotifier notifier = ValueNotifier(10);
   MultipleChoiceModel? multipleChoiceModel;
   MultiSelectModel? multiSelectModel;
   NumericalsModel? numericalsModel;
-  ExamModel? examModel;
+  //ExamModel? examModel;
 
   List<questionsModel> questionList = [];
   setController(int cid, int sid, int mid, int eid) {
@@ -72,16 +73,16 @@ class ExamController extends GetxController {
   loadExam() async {
     questionList = [];
     final Response = await http.get(
-        Uri.parse(endpoint + "exam/addexam/$examID/"),
+        Uri.parse(endpoint + "exam/sections-add//$selectedSectionID/"),
         headers: AuthHeader);
 
     // print("$endpoint/exam/addexam/$examID/");
 
     if (Response.statusCode == 200 || Response.statusCode == 201) {
       var exam = json.decode(Response.body);
-      examModel = ExamModel.fromJson(exam);
+     // examModel = ExamModel.fromJson(exam);
       print(Response.body);
-      examModel = ExamModel.fromJson(exam);
+     // examModel = ExamModel.fromJson(exam);
       for (var data in exam["multiplechoice"]) {
         MultipleChoiceModel md = MultipleChoiceModel.fromJson(data);
         questionsModel model =

@@ -238,6 +238,9 @@ class _ContentViewState extends State<ContentView> {
                               onTap: () {
                                 // ctrl.SetCourse(data.courseUniqueId.toString(),
                                 //     cs: data);
+                                if (data.type == "EXAM")
+                                  ctrl.SetContent(data.content_id.toString(),
+                                      cs: data);
                               },
                               child: Container(
                                   width: 230,
@@ -321,9 +324,7 @@ class _ContentViewState extends State<ContentView> {
                                   InkWell(
                                     onTap: () {
                                       if (data.type == "EXAM")
-                                        ctrl.SetContent(
-                                            data.content_id.toString(),
-                                            cs: data);
+                                        ctrl.exportExamResult();
 
                                       if (data.type == "VIDEO") {
                                         List option =

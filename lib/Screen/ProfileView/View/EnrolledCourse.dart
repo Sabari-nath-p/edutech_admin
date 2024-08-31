@@ -25,7 +25,7 @@ class EnrolledCourse extends StatelessWidget {
                 border: Border.all(color: Colors.black12)),
             child: Column(
               children: [
-                if (pctrl.selectedProfileModel!.purchaseList != null)
+                if (pctrl.individualUser!.purchaseList != null)
                   DataTable(
                       showBottomBorder: true,
                       columnSpacing: 0,
@@ -61,7 +61,7 @@ class EnrolledCourse extends StatelessWidget {
                         ),
                       ],
                       rows: [
-                        for (var data in pctrl.selectedProfileModel!
+                        for (var data in pctrl.individualUser!
                             .purchaseList!.purchasedCourses!)
                           DataRow(cells: [
                             DataCell(Container(

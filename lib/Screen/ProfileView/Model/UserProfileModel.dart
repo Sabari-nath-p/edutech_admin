@@ -8,6 +8,7 @@ class UserProfileModel {
   bool? isActive;
   PurchaseList? purchaseList;
   List<ExamResponse>? examResponse;
+  String purchaseIDString = "";
 
   UserProfileModel(
       {this.id,
@@ -36,6 +37,14 @@ class UserProfileModel {
       json['exam_response'].forEach((v) {
         examResponse!.add(new ExamResponse.fromJson(v));
       });
+    }
+    if (purchaseList != null) {
+      if (purchaseList!.purchasedCourses != null) {
+        purchaseIDString = purchaseList!.purchasedCourses!
+            .map((e) => e.courseId)
+            .toList()
+            .join(",");
+      }
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:dio/dio.dart' as Request;
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _addCourseState extends State<addCourse> {
   TextEditingController CourseCover = TextEditingController();
   TextEditingController isPaidOnly = TextEditingController();
   TextEditingController isActive = TextEditingController();
+  TextEditingController validity = TextEditingController();
   // bool isPaidOnly = false;
 
   bool isLoading = false;
@@ -46,6 +48,7 @@ class _addCourseState extends State<addCourse> {
       coursename.text = Cdata["field_of_study"].toString();
       coursedescription.text = Cdata["Course_description"];
       coursebenefits.text = Cdata["user_benefit"];
+      validity.text = Cdata["Course_duration"];
       couresPrice.text = Cdata["price"].toString();
       if (Cdata["course_image"] != null)
         CourseIcon.text = Cdata["course_image"];
@@ -84,6 +87,8 @@ class _addCourseState extends State<addCourse> {
                         height(10),
                         Tfields("Course Price*", couresPrice),
                         height(10),
+                        Tfields("Course validity (In Days)", validity),
+                        height(10),
                         TBox("Only Paid", isPaidOnly),
                         height(10),
                         if (Cdata != 1) TBox("Visibility", isActive),
@@ -101,6 +106,7 @@ class _addCourseState extends State<addCourse> {
                       if (coursename.text.isNotEmpty &&
                           couresPrice.text.isNotEmpty &&
                           coursebenefits.text.isNotEmpty &&
+                          validity.text.isNotEmpty &&
                           coursedescription.text.isNotEmpty) {
                         setState(() {
                           controller.CourseUploading = true;
@@ -109,7 +115,11 @@ class _addCourseState extends State<addCourse> {
                           AddCousreData();
                         else
                           EditCourseData();
-                      } else {}
+                      } else {
+                        ShowToast(
+                            title: "Missing Fields",
+                            body: "Please enter missing field");
+                      }
                     },
                     child: ButtonContainer(
                       (controller.CourseUploading)
@@ -138,6 +148,7 @@ class _addCourseState extends State<addCourse> {
     cmodel.courseDescription = coursedescription.text.toString();
     cmodel.userBenefit = coursebenefits.text.toString();
     //cmodel.isActive = true;
+    cmodel.validity = validity.text;
     cmodel.coverImage = CourseCover.text.toString();
     cmodel.courseImage = CourseIcon.text.toString();
 
@@ -152,6 +163,7 @@ class _addCourseState extends State<addCourse> {
     cmodel.courseDescription = coursedescription.text.toString();
     cmodel.userBenefit = coursebenefits.text.toString();
     cmodel.isActive = true;
+    cmodel.validity = validity.text;
     cmodel.coverImage = CourseCover.text.toString();
     cmodel.courseImage = CourseIcon.text.toString();
 

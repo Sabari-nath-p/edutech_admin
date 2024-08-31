@@ -25,7 +25,7 @@ class EnrolledExam extends StatelessWidget {
                 border: Border.all(color: Colors.black12)),
             child: Column(
               children: [
-                if (pctrl.selectedProfileModel!.purchaseList != null)
+                if (pctrl.individualUser!.purchaseList != null)
                   DataTable(
                       showBottomBorder: true,
                       columnSpacing: 0,
@@ -61,15 +61,15 @@ class EnrolledExam extends StatelessWidget {
                         ),
                       ],
                       rows: [
-                        for (var data in pctrl.selectedProfileModel!
-                            .purchaseList!.purchasedExams!)
+                        for (var data in pctrl
+                            .individualUser!.purchaseList!.purchasedCourses!)
                           DataRow(cells: [
                             DataCell(Container(
                                 width: 140,
                                 height: 40,
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.all(2),
-                                child: tx600("${data.examId}"))),
+                                child: tx600("${data.courseId}"))),
                             DataCell(Container(
                                 width: 180,
                                 height: 40,

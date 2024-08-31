@@ -356,6 +356,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ShowToast(
             title: "Invalid Credentials",
             body: "username or password is incorrect");
+      } else if (response.body.toString() == "Multiple Login Detected") {
+        // ShowToast(title: "Already Logined", body: "Please retry to login");
+        tryLog(email, password);
       } else {
         var js = json.decode(response.body);
         SharedPreferences preferences = await SharedPreferences.getInstance();

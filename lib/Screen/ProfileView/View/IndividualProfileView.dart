@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mathlab_admin/Constants/AppColor.dart';
 import 'package:mathlab_admin/Constants/functionsupporter.dart';
 import 'package:mathlab_admin/Screen/ProfileView/Service/controller.dart';
 import 'package:mathlab_admin/Screen/ProfileView/View/EnrolledCourse.dart';
@@ -11,68 +13,73 @@ class IndividualProfileView extends StatelessWidget {
   ProfileController pctrl = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        tx600("Personal Details", size: 21),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          constraints: BoxConstraints(maxWidth: 600),
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.black12)),
-          child: Column(
+    return (pctrl.individualUser == null)
+        ? Center(
+            child: LoadingAnimationWidget.discreteCircle(
+                color: primaryColor, size: 30),
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  tx500("Name  :   ", size: 18),
-                  tx600(pctrl.selectedProfileModel!.name!, size: 20)
-                ],
+              SizedBox(
+                height: 20,
               ),
+              tx600("Personal Details", size: 21),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  tx500("Email :   ", size: 18),
-                  tx600(pctrl.selectedProfileModel!.username!, size: 20)
-                ],
+              Container(
+                constraints: BoxConstraints(maxWidth: 600),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.black12)),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        tx500("Name  :   ", size: 18),
+                        tx600(pctrl.individualUser!.name!, size: 20)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        tx500("Email :   ", size: 18),
+                        tx600(pctrl.individualUser!.username!, size: 20)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        tx500("Contact Number  :   ", size: 18),
+                        tx600(pctrl.individualUser!.phoneNumber!, size: 20)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
-              Row(
-                children: [
-                  tx500("Contact Number  :   ", size: 18),
-                  tx600(pctrl.selectedProfileModel!.phoneNumber!, size: 20)
-                ],
-              ),
+              EnrolledCourse(),
               SizedBox(
-                height: 5,
+                height: 25,
               ),
+              //  //   EnrolledExam(),
+              //     SizedBox(
+              //       height: 25,
+              //     ),
+              ExamResponseView()
             ],
-          ),
-        ),
-        SizedBox(
-          height: 25,
-        ),
-        EnrolledCourse(),
-        SizedBox(
-          height: 25,
-        ),
-        EnrolledExam(),
-        SizedBox(
-          height: 25,
-        ),
-        ExamResponseView()
-      ],
-    );
+          );
   }
 }

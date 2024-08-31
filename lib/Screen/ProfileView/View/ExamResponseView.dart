@@ -23,7 +23,7 @@ class ExamResponseView extends StatelessWidget {
               border: Border.all(color: Colors.black12)),
           child: Column(
             children: [
-              if (pctrl.selectedProfileModel!.examResponse != null)
+              if (pctrl.individualUser!.examResponse != null)
                 DataTable(
                     showBottomBorder: true,
                     columnSpacing: 0,
@@ -59,27 +59,27 @@ class ExamResponseView extends StatelessWidget {
                       ),
                     ],
                     rows: [
-                      for (var data
-                          in pctrl.selectedProfileModel!.examResponse!)
+                      for (var data in pctrl.individualUser!.examResponse!)
                         DataRow(cells: [
                           DataCell(Container(
                               width: 140,
                               height: 40,
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(2),
-                              child: tx600("${data.examName}"))),
+                              child: tx600("${data["exam_name"]}"))),
                           DataCell(Container(
                               width: 180,
                               height: 40,
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(2),
-                              child: tx600("${data.marksScored!}"))),
+                              child: tx600(
+                                  "${data["marks_scored"]!}/${data["total_scored"]}"))),
                           DataCell(Container(
                               width: 150,
                               height: 40,
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(2),
-                              child: tx600("${(data.response["time"])}"))),
+                              child: tx600("${(data["time_taken"])}"))),
                         ])
                     ])
             ],

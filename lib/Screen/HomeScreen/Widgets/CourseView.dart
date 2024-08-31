@@ -8,6 +8,7 @@ import 'package:mathlab_admin/Screen/HomeScreen/Widgets/ContentView.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/ModuleView.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/SubjectView.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addCourse.dart';
+import 'package:mathlab_admin/Screen/HomeScreen/Widgets/sectionView.dart';
 
 import '../../../Constants/AppColor.dart';
 import '../../../Constants/functionsupporter.dart';
@@ -38,8 +39,12 @@ class _CourseViewState extends State<CourseView> {
         ? (ctrl.SelectedSubject != "")
             ? (ctrl.SelectedModule != "")
                 ? ctrl.SelectedCotent != ""
-                    ? ExamMainScreen()
-                    : ContentView()
+                    ? ctrl.selectedSection == ""
+                        ? SectionView()
+                        : ExamMainScreen(
+                            selectedSectionID: ctrl.selectedSection,
+                          )
+                    :  ContentView()
                 : ModuleView()
             : SubjectView()
         : Container(

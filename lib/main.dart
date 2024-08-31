@@ -22,7 +22,7 @@ void main() async {
     token = pref.getString("TOKEN").toString();
     print(token);
     final response = await get(
-        Uri.parse("$endpoint/applicationview/userlist/$email/"),
+        Uri.parse("$endpoint/applicationview/get-user-profile/"),
         headers: ({"Authorization": "token $token"}));
     //   print(response.body);
     if (response.statusCode == 401) {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart' as Request;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/connect.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:mathlab_admin/Constants/AppHeaders.dart';
@@ -14,8 +15,10 @@ import 'package:mathlab_admin/Screen/HomeScreen/Models/NoteModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Models/VideoModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Models/contentModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Models/courseModel.dart';
+import 'package:mathlab_admin/Screen/HomeScreen/Models/sectionModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Models/subjectModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addExam.dart';
+import 'package:mathlab_admin/Screen/ProfileView/Model/UserProfileModel.dart';
 import 'package:quickalert/quickalert.dart';
 
 class HomeController extends GetxController {
@@ -25,15 +28,19 @@ class HomeController extends GetxController {
   String SelectedSubject = "";
   String SelectedModule = "";
   String SelectedCotent = "";
+  String selectedSection = "";
   DateTime? SelectedDate;
   late CourseModel SelectedCourseModel;
   late SubjectModel SelectedSubjectModel;
   late ModuleModel SelectedModuleModel;
   late contentModel SelectedContentModel;
+  late SectionModel SelectedSectionModel;
+
   List<CourseModel> CourseList = [];
   List<SubjectModel> SubjectList = [];
   List<ModuleModel> ModuleList = [];
   List<contentModel> ContentList = [];
+  List<SectionModel> SectionList = [];
 
   SetCourse(String id, {var cs = false}) {
     SelectedCourse = id;
@@ -76,10 +83,41 @@ class HomeController extends GetxController {
     update();
     if (cs != false) {
       SelectedContentModel = cs;
+      loadSection();
       update();
       // loadContent();
     }
     update();
+  }
+
+  loadSection() async {
+    SectionList.clear();
+    update();
+    final Response = await http.get(
+        Uri.parse(endpoint +
+            "/exam/addexam/${SelectedContentModel!.examModel!.examUniqueId!}"),
+        headers: AuthHeader);
+
+    print(Response.body);
+    print(Response.statusCode);
+    if (Response.statusCode == 200) {
+      var data = json.decode(Response.body);
+      for (var st in data["sections"]) {
+        SectionList.add(SectionModel.fromJson(st));
+      }
+      update();
+    }
+    update();
+  }
+
+  deleteSection(String sectionID) async {
+    final Response = await http.delete(
+        Uri.parse(endpoint + "exam/sections-add/$sectionID/"),
+        headers: AuthHeader);
+
+    print(Response.body);
+    print(Response.statusCode);
+    loadSection();
   }
 
   loadContent() async {
@@ -140,6 +178,8 @@ class HomeController extends GetxController {
 
     if (eres.statusCode == 200) {
       var res2 = json.decode(eres.body);
+
+      print(res2);
       for (var data in res2) {
         ExamModel model = ExamModel.fromJson(data);
         contentModel Cmodel = contentModel(
@@ -779,6 +819,7 @@ class HomeController extends GetxController {
       "Course_description": Cmodel.courseDescription,
       "user_benefit": Cmodel.userBenefit,
       "only_paid": Cmodel.onlyPaid,
+      "Course_duration": Cmodel.validity,
       "subjects": [],
       "is_active": false,
 
@@ -850,6 +891,7 @@ class HomeController extends GetxController {
       "Course_description": Cmodel.courseDescription,
       "user_benefit": Cmodel.userBenefit,
       "only_paid": Cmodel.onlyPaid,
+      "Course_duration": Cmodel.validity,
 
       "is_active": Cmodel.isActive,
 
@@ -884,6 +926,18 @@ class HomeController extends GetxController {
       update();
       ShowToast(title: "Error occurred", body: "Something went to wrong");
     }
+  }
+
+  exportExamResult() async {
+    final Response = await http.post(
+        Uri.parse(
+          endpoint +
+              "applicationview/userresponses?search=${SelectedContentModel.examModel!.examId!}",
+        ),
+        headers: AuthHeader);
+    print(SelectedContentModel.examModel!.examId);
+
+    if (Response.statusCode == 200) {}
   }
 
   @override

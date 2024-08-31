@@ -28,6 +28,14 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+    <string>Your app needs access to the Documents folder to save files.</string>
+	 <key>NSDocumentsFolderUsageDescription</key>
+    <string>Your app needs access to the Documents folder to save files.</string>
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>Your app needs access to the Downloads folder to save files.</string>
+    <key>NSDesktopFolderUsageDescription</key>
+    <string>Your app needs access to the Desktop folder to save files.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

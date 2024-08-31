@@ -8,6 +8,7 @@ class CourseModel {
   String? userBenefit;
   bool? onlyPaid;
   bool? isActive;
+  String? validity;
 
   CourseModel(
       {this.courseUniqueId,
@@ -17,6 +18,7 @@ class CourseModel {
       this.price,
       this.courseDescription,
       this.userBenefit,
+      this.validity,
       this.onlyPaid,
       this.isActive});
 
@@ -26,6 +28,7 @@ class CourseModel {
     courseImage = json['course_image'];
     coverImage = json['cover_image'];
     price = json['price'];
+    validity = json["Course_duration"].toString();
     courseDescription = json['Course_description'];
     userBenefit = json['user_benefit'];
     onlyPaid = json['only_paid'];
@@ -42,6 +45,7 @@ class CourseModel {
     data['Course_description'] = this.courseDescription;
     data['user_benefit'] = this.userBenefit;
     data['only_paid'] = this.onlyPaid;
+    data["Course_duration"] = this.validity;
     data['is_active'] = this.isActive;
     return data;
   }

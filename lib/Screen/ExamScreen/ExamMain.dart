@@ -8,7 +8,8 @@ import 'package:mathlab_admin/Screen/HomeScreen/Service/controller.dart';
 import '../../Constants/functionsupporter.dart';
 
 class ExamMainScreen extends StatefulWidget {
-  ExamMainScreen({super.key});
+  String selectedSectionID;
+  ExamMainScreen({super.key, required this.selectedSectionID});
 
   @override
   State<ExamMainScreen> createState() => _ExamMainScreenState();
@@ -22,7 +23,7 @@ class _ExamMainScreenState extends State<ExamMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    Ectrl.selectedSectionID = widget.selectedSectionID;
     Ectrl.setController(
         ctrl.SelectedCourseModel.courseUniqueId!,
         ctrl.SelectedSubjectModel.subjectId!,
@@ -41,7 +42,8 @@ class _ExamMainScreenState extends State<ExamMainScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    ctrl.SetContent("");
+                    ctrl.selectedSection = "";
+                    ctrl.update();
                   },
                   child: Icon(
                     Icons.arrow_back_ios_new,
@@ -49,20 +51,20 @@ class _ExamMainScreenState extends State<ExamMainScreen> {
                   ),
                 ),
                 width(10),
-                if (Ectrl.examModel != null)
-                  tx700(Ectrl.examModel!.examName!,
-                      size: 25, color: Colors.black54),
+                //  if (Ectrl.examModel != null)
+                tx700(ctrl.SelectedContentModel!.examModel!.examName!,
+                    size: 25, color: Colors.black54),
                 Expanded(child: Container()),
                 width(20)
               ],
             ),
             Container(
               //width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 80,
+              height: MediaQuery.of(context).size.height - 83,
               child: Row(
                 children: [
                   Container(
-                    width: 700,
+                    width: 703,
                     child: QuestionAdd(),
                   ),
                   width(10),

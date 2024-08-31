@@ -49,7 +49,7 @@ Text tx500(String text,
         textAlign: textAlign,
         softWrap: true,
         style: TextStyle(
-            fontSize: size,
+            fontSize: size - 2,
             color: color,
             fontFamily: family,
             fontWeight: FontWeight.w500));
@@ -62,7 +62,7 @@ Text tx400(String text,
         textAlign: textAlign,
         softWrap: true,
         style: TextStyle(
-            fontSize: size,
+            fontSize: size - 2,
             color: color,
             fontFamily: family,
             fontWeight: FontWeight.w400));
@@ -75,7 +75,7 @@ Text tx600(String text,
         textAlign: textAlign,
         softWrap: true,
         style: TextStyle(
-            fontSize: size,
+            fontSize: size - 2,
             color: color,
             fontFamily: family,
             fontWeight: FontWeight.w600));
@@ -88,7 +88,7 @@ Text tx700(String text,
         textAlign: textAlign,
         softWrap: true,
         style: TextStyle(
-            fontSize: size,
+            fontSize: size - 2,
             color: color,
             fontFamily: family,
             fontWeight: FontWeight.w700));

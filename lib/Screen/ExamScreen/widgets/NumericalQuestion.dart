@@ -140,6 +140,7 @@ class _NumericalQuestionViewState extends State<NumericalQuestionView> {
       "positive_marks": postiveMark.text,
       "negetive_mark": negativeMark.text,
       "answer": correctAnswer.text,
+      "section": Ectrl.selectedSectionID,
       "question_type": 3,
       "solution_text": Solution.text,
       if (questionImage.text != "")
