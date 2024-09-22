@@ -74,6 +74,19 @@ class Advancefilterview extends StatelessWidget {
                       width: 200),
                 ),
               ),
+              height(10),
+              Align(
+                alignment: Alignment.center,
+                child: InkWell(
+                  onTap: () {
+                    pctrl.exportToExcel(pctrl.exportCourseText.text,
+                        expired: true);
+                  },
+                  child: ButtonContainer(
+                      tx500("Expired User", color: Colors.white),
+                      width: 200),
+                ),
+              ),
               height(20),
               tx600("Notifications"),
               SizedBox(
@@ -106,7 +119,7 @@ class Advancefilterview extends StatelessWidget {
                 alignment: Alignment.center,
                 child: InkWell(
                   onTap: () {
-                    pctrl.loadProfiles();
+                    pctrl.sendNotificationActiveCourse(isexpired: true);
                   },
                   child: ButtonContainer(
                       tx500("Renewable", color: Colors.white),

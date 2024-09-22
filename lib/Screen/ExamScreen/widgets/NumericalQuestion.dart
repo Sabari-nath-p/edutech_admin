@@ -9,6 +9,7 @@ import 'package:mathlab_admin/Constants/inputField.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/controller.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/models/NumericalModel.dart';
 import 'package:dio/dio.dart' as Request;
+import 'package:mathlab_admin/Screen/ExamScreen/widgets/ChangeSection.dart';
 
 class NumericalQuestionView extends StatefulWidget {
   NumericalsModel? model;
@@ -94,33 +95,51 @@ class _NumericalQuestionViewState extends State<NumericalQuestionView> {
           height(10),
           fieldImage("Solution Image", SoultionImage),
           height(10),
-          Tfields("Postive Mark", postiveMark),
-          height(10),
-          Tfields("Negative Mark", negativeMark),
-          height(10),
-          InkWell(
-            onTap: () {
-              setState(() {
-                Loading = true;
-              });
-              if ((widget.model == null)) {
-                AddInput();
-              } else {
-                UpdateQuestion();
-              }
-            },
-            child: ButtonContainer(
-              (Loading)
-                  ? LoadingAnimationWidget.staggeredDotsWave(
-                      color: Colors.white, size: 22)
-                  : tx600(
-                      (widget.model != null)
-                          ? "Update Question"
-                          : "Add Question",
-                      color: Colors.white),
-              width: 150,
-              radius: 10,
-            ),
+          // Tfields("Postive Mark", postiveMark),
+          // height(10),
+          // Tfields("Negative Mark", negativeMark),
+          // height(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    Loading = true;
+                  });
+                  if ((widget.model == null)) {
+                    AddInput();
+                  } else {
+                    UpdateQuestion();
+                  }
+                },
+                child: ButtonContainer(
+                  (Loading)
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white, size: 22)
+                      : tx600(
+                          (widget.model != null)
+                              ? "Update Question"
+                              : "Add Question",
+                          color: Colors.white),
+                  width: 150,
+                  radius: 10,
+                ),
+              ),
+              if ((widget.model != null))
+                InkWell(
+                  onTap: () {
+                    SectionChange.changeNumerical(context);
+                  },
+                  child: InkWell(
+                    child: ButtonContainer(
+                      tx600("Change Section", color: Colors.white),
+                      width: 150,
+                      radius: 10,
+                    ),
+                  ),
+                )
+            ],
           ),
           height(20)
         ],

@@ -5,6 +5,7 @@ class ExamModel {
   String? examId;
   String? examName;
   String? instruction;
+  String? pdf;
   String? durationOfExam;
   int? totalMarks;
   int? passmark;
@@ -23,6 +24,7 @@ class ExamModel {
     this.instruction,
     this.durationOfExam,
     this.totalMarks,
+    this.pdf,
     this.noOfQuestions,
     this.createdDate,
     this.updatedDate,
@@ -41,6 +43,7 @@ class ExamModel {
     durationOfExam = json['duration_of_exam'];
     totalMarks = json['total_marks'];
     noOfQuestions = json['no_of_questions'];
+    pdf = json["solution_pdf"];
     createdDate = json['created_date'];
     updatedDate = json['updated_date'];
     slugExams = json['slug_exams'];
@@ -58,6 +61,7 @@ class ExamModel {
     data['instruction'] = this.instruction;
     data['duration_of_exam'] = this.durationOfExam;
     data['total_marks'] = this.totalMarks;
+    data["solution_pdf"] = this.pdf;
     data['no_of_questions'] = this.noOfQuestions;
     data['created_date'] = this.createdDate;
     data['updated_date'] = this.updatedDate;

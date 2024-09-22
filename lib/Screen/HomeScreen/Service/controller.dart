@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart' as Request;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:mathlab_admin/Constants/AppHeaders.dart';
 import 'package:mathlab_admin/Constants/Strings.dart';
 import 'package:mathlab_admin/Constants/functionsupporter.dart';
@@ -19,6 +22,8 @@ import 'package:mathlab_admin/Screen/HomeScreen/Models/sectionModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Models/subjectModel.dart';
 import 'package:mathlab_admin/Screen/HomeScreen/Widgets/addExam.dart';
 import 'package:mathlab_admin/Screen/ProfileView/Model/UserProfileModel.dart';
+import 'package:excel/excel.dart' as ex;
+
 import 'package:quickalert/quickalert.dart';
 
 class HomeController extends GetxController {
@@ -468,7 +473,20 @@ class HomeController extends GetxController {
   AddExam(ExamModel videoModel, BuildContext context) async {
     final dio = Request.Dio();
     print(json.encode(videoModel.toJson()));
-    Request.FormData formData = Request.FormData.fromMap(videoModel.toJson());
+    // Request.FormData formData = Request.FormData.fromMap(videoModel.toJson());
+    Request.FormData formData = Request.FormData.fromMap({
+      "module": videoModel.module,
+      "access_type": videoModel.accessType,
+      "exam_id": videoModel.examId,
+      "exam_name": videoModel.examName,
+      "instruction": videoModel.instruction,
+      "duration_of_exam": videoModel.durationOfExam,
+      "total_marks": videoModel.totalMarks,
+      "is_active": true,
+      if (videoModel.pdf != "")
+        'solution_pdf': await Request.MultipartFile.fromFile(videoModel.pdf!,
+            filename: videoModel.pdf!.split("/").last),
+    });
 
     final response = await dio.post(
         endpoint +
@@ -500,10 +518,22 @@ class HomeController extends GetxController {
     }
   }
 
-  UpdateExam(ExamModel videoModel, BuildContext context) async {
+  UpdateExam(ExamModel videoModel, BuildContext context, bool isEdit) async {
     final dio = Request.Dio();
     print(json.encode(videoModel.toJson()));
-    Request.FormData formData = Request.FormData.fromMap(videoModel.toJson());
+    Request.FormData formData = Request.FormData.fromMap({
+      "module": videoModel.module,
+      "access_type": videoModel.accessType,
+      "exam_id": videoModel.examId,
+      "exam_name": videoModel.examName,
+      "instruction": videoModel.instruction,
+      "duration_of_exam": videoModel.durationOfExam,
+      "total_marks": videoModel.totalMarks,
+      "is_active": true,
+      if (videoModel.pdf != "" && isEdit)
+        'solution_pdf': await Request.MultipartFile.fromFile(videoModel.pdf!,
+            filename: videoModel.pdf!.split("/").last),
+    });
 
     final response = await dio.patch(
         endpoint +
@@ -928,16 +958,54 @@ class HomeController extends GetxController {
     }
   }
 
-  exportExamResult() async {
-    final Response = await http.post(
+  exportExamResult(String examUniqueId) async {
+    final result = await FilePicker.platform.getDirectoryPath();
+    final Response = await http.get(
         Uri.parse(
-          endpoint +
-              "applicationview/userresponses?search=${SelectedContentModel.examModel!.examId!}",
+          endpoint + "applicationview/userresponses/?search=${examUniqueId}",
         ),
         headers: AuthHeader);
-    print(SelectedContentModel.examModel!.examId);
+    print(examUniqueId);
+    print(Response.body);
+    if (Response.statusCode == 200) {
+      var data = json.decode(Response.body);
+      if (result != null) saveResultExcel(data, result);
+    }
+  }
 
-    if (Response.statusCode == 200) {}
+  saveResultExcel(var data, String path) async {
+    var excel = ex.Excel.createExcel();
+    var sheet = excel['Sheet1'];
+
+    // Add headers to the worksheet
+    sheet.cell(ex.CellIndex.indexByString("A1")).value =
+        ex.TextCellValue("Email");
+    sheet.cell(ex.CellIndex.indexByString("B1")).value =
+        ex.TextCellValue("Name");
+    sheet.cell(ex.CellIndex.indexByString("C1")).value =
+        ex.TextCellValue("MarkScored");
+    sheet.cell(ex.CellIndex.indexByString("D1")).value =
+        ex.TextCellValue("Time Taken");
+    int i = -1;
+    for (var dt in data) {
+      i = i + 1;
+      sheet.cell(ex.CellIndex.indexByString("A${i + 2}")).value =
+          ex.TextCellValue(dt["username"]);
+      sheet.cell(ex.CellIndex.indexByString("B${i + 2}")).value =
+          ex.TextCellValue(dt["name"] ?? " ");
+      sheet.cell(ex.CellIndex.indexByString("C${i + 2}")).value =
+          ex.TextCellValue(dt["marks_scored"] ?? "");
+      sheet.cell(ex.CellIndex.indexByString("D${i + 2}")).value =
+          ex.TextCellValue(dt["time_taken"] ?? "");
+    }
+
+    String filename = DateFormat('yyyy-MM-dd-hh:mm:ss').format(DateTime.now());
+    filename = "${data["exam_name"]}$filename";
+    String excelFilePath = "${path}/$filename.xlsx";
+    File file = File(excelFilePath);
+    await file.writeAsBytes(excel.encode()!);
+
+    ShowToast(title: "Completed", body: "Exam result exported successfully");
   }
 
   @override

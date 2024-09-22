@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,15 +58,16 @@ class ProfileController extends GetxController {
     }
   }
 
-  sendNotificationActiveCourse() async {
+  sendNotificationActiveCourse({bool isexpired = false}) async {
     if (notificationCourseText.text.isNotEmpty &&
         NotificationMessage.text.isNotEmpty &&
         NotificationBody.text.isNotEmpty) {
       //  final Response = await
-
+      String parms = "";
+      if (isexpired) parms = "show_expired=True&";
       final Response = await get(
           Uri.parse(endpoint +
-              "users/get-remaning-dates?course=true&course_name=${notificationCourseText.text}"),
+              "users/get-remaning-dates?course=true&course_name=${notificationCourseText.text}&${parms}"),
           headers: AuthHeader);
 
       if (Response.statusCode == 200) {
@@ -98,6 +100,9 @@ class ProfileController extends GetxController {
         print(notResponse.statusCode);
 
         if (Response.statusCode == 200 || Response.statusCode == 201) {
+          NotificationBody.text = "";
+          NotificationMessage.text = "";
+          update();
           ShowToast(
               title: "Completed",
               body: "Notification has been send succeessfully");
@@ -110,13 +115,16 @@ class ProfileController extends GetxController {
     }
   }
 
-  exportToExcel(String courseName) async {
+  exportToExcel(String courseName, {bool expired = false}) async {
     final result = await FilePicker.platform.getDirectoryPath();
     String parm = "";
     if (result != null) {
       if (courseName != "") parm = "&course_name=$courseName";
+      String param2 = "";
+      if (expired) param2 = "show_expired=True";
       final Response = await get(
-          Uri.parse(endpoint + "users/get-remaning-dates?course=true$parm"),
+          Uri.parse(
+              endpoint + "users/get-remaning-dates?course=true$parm&$param2"),
           headers: AuthHeader);
 
       if (Response.statusCode == 200) {
@@ -127,12 +135,13 @@ class ProfileController extends GetxController {
           clist.add(CUserlistModel.fromJson(user));
         }
 
-        saveExcel(clist, result);
+        saveExcel(clist, result, expired: expired);
       }
     }
   }
 
-  saveExcel(List<CUserlistModel> userlist, String path) async {
+  saveExcel(List<CUserlistModel> userlist, String path,
+      {bool expired = false}) async {
     var excel = ex.Excel.createExcel();
     var sheet = excel['Sheet1'];
 
@@ -147,8 +156,9 @@ class ProfileController extends GetxController {
         ex.TextCellValue("Phone");
     sheet.cell(ex.CellIndex.indexByString("E1")).value =
         ex.TextCellValue("Course Name");
-    sheet.cell(ex.CellIndex.indexByString("F1")).value =
-        ex.TextCellValue("Expiry Date");
+    if (!expired)
+      sheet.cell(ex.CellIndex.indexByString("F1")).value =
+          ex.TextCellValue("Expiry Date");
 
     // Add data to the worksheet
     for (int i = 0; i < userlist.length; i++) {
@@ -163,9 +173,10 @@ class ProfileController extends GetxController {
           ex.TextCellValue(data.phoneNumber ?? "");
       sheet.cell(ex.CellIndex.indexByString("E${i + 2}")).value =
           ex.TextCellValue(data.courseName ?? "");
-      sheet.cell(ex.CellIndex.indexByString("F${i + 2}")).value =
-          ex.TextCellValue(DateFormat('yyyy MM dd').format(
-              DateTime.now().add(Duration(days: data.noOfDaysToExpire ?? 0))));
+      if (!expired)
+        sheet.cell(ex.CellIndex.indexByString("F${i + 2}")).value =
+            ex.TextCellValue(DateFormat('yyyy MM dd').format(DateTime.now()
+                .add(Duration(days: data.noOfDaysToExpire ?? 0))));
     }
 
     // Directory? documentsDirectory = await getDownloadsDirectory();
@@ -191,10 +202,19 @@ class ProfileController extends GetxController {
   }
 
   loadProfiles({String search = ""}) async {
+    String parm = "";
+
+    if (search.contains("@"))
+      parm = "username=${search}";
+    else
+      parm = "name=${search}";
+
+    print(parm);
+
     SearchStudentList.clear();
     final Response = await get(
         Uri.parse(endpoint +
-            "applicationview/get-all-user-list?name=${search}&course_id=${getCourseID(courseText.text)}"),
+            "applicationview/get-all-user-list?$parm&course_id=${getCourseID(courseText.text)}"),
         headers: AuthHeader);
     print(Response.body);
     print(Response.statusCode);

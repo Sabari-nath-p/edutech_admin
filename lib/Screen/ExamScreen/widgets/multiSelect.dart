@@ -9,6 +9,7 @@ import 'package:mathlab_admin/Constants/functionsupporter.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/controller.dart';
 import 'package:dio/dio.dart' as Request;
 import 'package:mathlab_admin/Screen/ExamScreen/Service/models/multiSelectModel.dart';
+import 'package:mathlab_admin/Screen/ExamScreen/widgets/ChangeSection.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/widgets/multiOption.dart';
 import '../../../Constants/inputField.dart';
 
@@ -87,32 +88,54 @@ class _MultiSelectState extends State<MultiSelect> {
             height(10),
             fieldImage("Solution Image", SoultionImage),
             height(10),
-            Tfields("Postive Mark", postiveMark),
+            // Tfields("Postive Mark", postiveMark),
+            // height(10),
+            // Tfields("Negative Mark", negativeMark),
             height(10),
-            Tfields("Negative Mark", negativeMark),
-            height(10),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  Loading = true;
-                });
-                if ((Edata == 1))
-                  addInput();
-                else
-                  updateInput();
-                // else {
-                //   updateInput();
-                // }
-              },
-              child: ButtonContainer(
-                (Loading)
-                    ? LoadingAnimationWidget.staggeredDotsWave(
-                        color: Colors.white, size: 22)
-                    : tx600((Edata != 1) ? "Update Question" : "Add Question",
-                        color: Colors.white),
-                width: 150,
-                radius: 10,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      Loading = true;
+                    });
+                    if ((Edata == 1))
+                      addInput();
+                    else
+                      updateInput();
+                    // else {
+                    //   updateInput();
+                    // }
+                  },
+                  child: ButtonContainer(
+                    (Loading)
+                        ? LoadingAnimationWidget.staggeredDotsWave(
+                            color: Colors.white, size: 22)
+                        : tx600(
+                            (Edata != 1) ? "Update Question" : "Add Question",
+                            color: Colors.white),
+                    width: 150,
+                    radius: 10,
+                  ),
+                ),
+                if ((Edata != 1))
+                  InkWell(
+                    onTap: () {
+                      SectionChange.changeMultiselect(context);
+                    },
+                    child: InkWell(
+                      child: ButtonContainer(
+                        tx600("Change Section", color: Colors.white),
+                        width: 150,
+                        radius: 10,
+                      ),
+                    ),
+                  )
+              ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             if (md != null) MultiSelectOption()
           ],

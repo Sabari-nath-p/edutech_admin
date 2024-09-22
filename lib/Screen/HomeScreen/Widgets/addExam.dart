@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +32,7 @@ class _AddExamState extends State<AddExam> {
   TextEditingController passmark = TextEditingController();
   TextEditingController isActive = TextEditingController();
   TextEditingController accessType = TextEditingController();
+  TextEditingController pdfLink = TextEditingController();
 
   HomeController ctrl = Get.put(HomeController());
   late ExamModel md;
@@ -46,6 +48,7 @@ class _AddExamState extends State<AddExam> {
       totalMarks.text = md.totalMarks.toString();
       passmark.text = (md.passmark != null) ? md.passmark!.toString() : "0";
       accessType.text = md.accessType.toString();
+      pdfLink.text = md.pdf ?? "";
       isActive.text = (Edata["is_active"]) ? "1" : "";
     }
     super.initState();
@@ -78,6 +81,8 @@ class _AddExamState extends State<AddExam> {
                         Tfields("Duration (HH:MM:SS)", durationOfExam),
                         height(10),
                         Tfields("Total Mark", totalMarks),
+                        height(10),
+                        FieldPdf("Solution PDF", pdfLink),
                         height(10),
                         Tfields("Pass Mark", passmark),
                         AField("Access Type", accessType),
@@ -134,6 +139,7 @@ class _AddExamState extends State<AddExam> {
     model.totalMarks = int.parse(totalMarks.text).toInt();
     model.passmark = int.parse(passmark.text).toInt();
     model.isActive = true;
+    model.pdf = pdfLink.text;
     model.accessType = int.parse(accessType.text).toInt();
 
     ctrl.AddExam(model, context);
@@ -152,6 +158,7 @@ class _AddExamState extends State<AddExam> {
     model.passmark = int.parse(passmark.text).toInt();
     model.isActive = isActive.text == "1" ? true : false;
     model.accessType = int.parse(accessType.text).toInt();
-    ctrl.UpdateExam(model, context);
+    model.pdf = pdfLink.text;
+    ctrl.UpdateExam(model, context, model.pdf != md.pdf);
   }
 }

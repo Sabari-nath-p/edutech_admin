@@ -324,7 +324,9 @@ class _ContentViewState extends State<ContentView> {
                                   InkWell(
                                     onTap: () {
                                       if (data.type == "EXAM")
-                                        ctrl.exportExamResult();
+                                        ctrl.exportExamResult(data
+                                            .examModel!.examUniqueId
+                                            .toString());
 
                                       if (data.type == "VIDEO") {
                                         List option =

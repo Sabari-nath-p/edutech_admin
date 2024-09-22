@@ -44,7 +44,7 @@ class _CourseViewState extends State<CourseView> {
                         : ExamMainScreen(
                             selectedSectionID: ctrl.selectedSection,
                           )
-                    :  ContentView()
+                    : ContentView()
                 : ModuleView()
             : SubjectView()
         : Container(

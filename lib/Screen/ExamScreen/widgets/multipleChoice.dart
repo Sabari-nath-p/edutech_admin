@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mathlab_admin/Screen/ExamScreen/Service/models/multiplechoice.dart';
+import 'package:mathlab_admin/Screen/ExamScreen/widgets/ChangeSection.dart';
 import 'package:mathlab_admin/main.dart';
 
 import '../../../Constants/AppHeaders.dart';
@@ -132,32 +133,51 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             height(10),
             fieldImage("Solution Image", SoultionImage),
             height(10),
-            Tfields("Postive Mark", postiveMark),
-            height(10),
-            Tfields("Negative Mark", negativeMark),
-            height(10),
+            // Tfields("Postive Mark", postiveMark),
+            // height(10),
+            // Tfields("Negative Mark", negativeMark),
+            // height(10),
             Tfields("Correct Answer", correctAnswer),
             height(10),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  Loading = true;
-                });
-                if ((Edata == 1))
-                  addInput();
-                else {
-                  updateInput();
-                }
-              },
-              child: ButtonContainer(
-                (Loading)
-                    ? LoadingAnimationWidget.staggeredDotsWave(
-                        color: Colors.white, size: 22)
-                    : tx600((Edata != 1) ? "Update Question" : "Add Question",
-                        color: Colors.white),
-                width: 150,
-                radius: 10,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      Loading = true;
+                    });
+                    if ((Edata == 1))
+                      addInput();
+                    else {
+                      updateInput();
+                    }
+                  },
+                  child: ButtonContainer(
+                    (Loading)
+                        ? LoadingAnimationWidget.staggeredDotsWave(
+                            color: Colors.white, size: 22)
+                        : tx600(
+                            (Edata != 1) ? "Update Question" : "Add Question",
+                            color: Colors.white),
+                    width: 150,
+                    radius: 10,
+                  ),
+                ),
+                if ((Edata != 1))
+                  InkWell(
+                    onTap: () {
+                      SectionChange.changeMultiChoice(context);
+                    },
+                    child: InkWell(
+                      child: ButtonContainer(
+                        tx600("Change Section", color: Colors.white),
+                        width: 150,
+                        radius: 10,
+                      ),
+                    ),
+                  )
+              ],
             ),
             height(20)
           ],
@@ -177,7 +197,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       "option2_text": optionB.text,
       "option3_text": optionC.text,
       "option4_text": optionD.text,
-      "section" : Ectrl.selectedSectionID,
+      "section": Ectrl.selectedSectionID,
       "positive_marks": postiveMark.text,
       "negetive_mark": negativeMark.text,
       "answer": correctAnswer.text,
@@ -190,7 +210,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
         'option1_image': await Request.MultipartFile.fromFile(optionAImage.text,
             filename: optionAImage.text.split("/").last),
       if (optionBImage.text != "")
-        'option2_image': await Request.MultipartFile.fromFile(optionB.text,
+        'option2_image': await Request.MultipartFile.fromFile(optionBImage.text,
             filename: optionBImage.text.split("/").last),
       if (optioncImage.text != "")
         'option3_image': await Request.MultipartFile.fromFile(optioncImage.text,
