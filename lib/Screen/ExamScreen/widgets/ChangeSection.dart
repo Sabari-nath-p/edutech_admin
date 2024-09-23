@@ -178,7 +178,7 @@ class _SectionChangeMultichoiceState extends State<_SectionChangeMultichoice> {
                       ExamController ectrl = Get.put(ExamController());
                       final Response = await post(
                           Uri.parse(
-                            endpoint + "exam/alter-numerical-section/",
+                            endpoint + "exam/alter-multiplechoice-section/",
                           ),
                           body: json.encode({
                             "section_id": SelectedItem,
