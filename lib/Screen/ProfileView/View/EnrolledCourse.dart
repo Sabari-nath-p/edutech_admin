@@ -61,8 +61,8 @@ class EnrolledCourse extends StatelessWidget {
                         ),
                       ],
                       rows: [
-                        for (var data in pctrl.individualUser!
-                            .purchaseList!.purchasedCourses!)
+                        for (var data in pctrl
+                            .individualUser!.purchaseList!.purchasedCourses!)
                           DataRow(cells: [
                             DataCell(Container(
                                 width: 140,

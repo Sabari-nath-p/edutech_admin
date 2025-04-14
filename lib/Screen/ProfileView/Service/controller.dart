@@ -64,10 +64,15 @@ class ProfileController extends GetxController {
         NotificationBody.text.isNotEmpty) {
       //  final Response = await
       String parms = "";
-      if (isexpired) parms = "show_expired=True&";
+
+      if (notificationCourseText.text != "All") {
+        parms = "&course_name=${notificationCourseText.text}&";
+      }
+      if (isexpired) parms = parms + "show_expired=True";
+
+      print(parms);
       final Response = await get(
-          Uri.parse(endpoint +
-              "users/get-remaning-dates?course=true&course_name=${notificationCourseText.text}&${parms}"),
+          Uri.parse(endpoint + "users/get-remaning-dates?course=true${parms}"),
           headers: AuthHeader);
 
       if (Response.statusCode == 200) {
